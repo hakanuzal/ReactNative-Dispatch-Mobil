@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Login from './src/pages/Login';
 import Home from './src/pages/Home';
+import Admin from './src/admin/Index';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen name="Login" component={Login} options={myOptions} />
           <Stack.Screen name="Home" component={Home} options={myOptions} />
+          <Stack.Screen name="Admin" component={Admin} options={myOptions} />
         </Stack.Navigator>
       </NavigationContainer>
 

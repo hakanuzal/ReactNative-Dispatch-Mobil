@@ -1,58 +1,61 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
-import { Button, Input } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import axios from 'axios'
 
+class Login extends React.Component {
 
-function Login({ navigation }) {
-    constructor(props) {
-        super(props);
-        this.state = { email: '', password: '' };
+    constructor() {
+        super()
+        this.state = {
+            Email: "",
+            Password: ""
+        }
+    }
+    
+    render() {
+        return (
+            <View style={styles.containerStyle}>
+                <View style={styles.subContainerStyle}>
+                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>Login Screen</Text>
+                </View>
+                <View style={styles.subContainerStyle}>
+                    <TextInput
+                        placeholder="E-mail"
+                        style={styles.inputStyle}
+                        value={this.state.Email}
+                        onChangeText={Email => this.setState({ Email })}
+                    />
+                </View>
+                <View style={styles.subContainerStyle}>
+                    <TextInput
+                        placeholder="Password"
+                        style={styles.inputStyle}
+                        value={this.state.Password}
+                        onChangeText={Password => this.setState({ Password })}
+                    />
+                </View>
+                <View style={styles.subContainerStyle}>
+                    <Button title="Login" onPress={login.bind(this)} />
+                </View>
+            </View>
+        );
     }
 }
-
-return (
-    <View style={styles.containerStyle}>
-        <View style={styles.subContainerStyle}>
-            <Text style={{ fontSize: 20, fontWeight: "bold" }}>Login Screen</Text>
-        </View>
-        <View style={styles.subContainerStyle}>
-            <TextInput
-                placeholder="E-mail"
-                style={styles.inputStyle}
-                onChangeText={email => setState({ email })}
-            />
-        </View>
-        <View style={styles.subContainerStyle}>
-            <TextInput
-                placeholder="Password"
-                style={styles.inputStyle}
-                onChangeText={password => setState({ password })}
-            />
-        </View>
-        <View style={styles.subContainerStyle}>
-            <Button title="Login" onPress={login.bind(this)} />
-        </View>
-    </View>
-);
-
-
-
 async function login() {
     console.log('Test');
+    console.log(this.state);
 
-    //const { email, password } = this.state;
-
-    axios.get('http://localhost:62259/api/UserLogin/Login', {
-        params: {
-            _Email: this.state.email,
-            _Password: this.state.password
-        }
-    })
+    axios.post('http://localhost:62259/api/UserLogin/Login', { ...this.state })
         .then(response => {
-
             console.log(response);
-            navigation.navigate('Home');
+            if (response.data == "5ff4425bff483b88a5cead99") {
+                this.props.navigation.navigate('Admin');
+            }
+            else{
+                
+            }
+
         }).catch((e) => console.log(e));
 };
 export default Login;
